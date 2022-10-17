@@ -23,7 +23,7 @@ class WomenHome(DataMixin , ListView):
         return dict(list(context.items()) + list(c_def.items()))
 
     def get_queryset(self):
-        return Women.objects.filter(is_published=True)
+        return Women.objects.filter(is_published=True).select_related('cat')
 # def index(request):
 #     posts = Women.objects.all()
 
@@ -106,7 +106,7 @@ class WomenCategory(DataMixin, ListView):
         return dict(list(context.items()) + list(c_def.items()))
 
     def get_queryset(self):
-        return Women.objects.filter(cat__slug=self.kwargs['cat_slug'], is_published=True)
+        return Women.objects.filter(cat__slug=self.kwargs['cat_slug'], is_published=True).select_related('cat')
 # def show_category(request, cat_slug):
 #     cat = Category.objects.filter(slug = cat_slug)
 #     posts = Women.objects.filter(cat_id = cat[0].id)
