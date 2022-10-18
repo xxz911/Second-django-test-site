@@ -24,6 +24,7 @@ from women.views import *
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('women.urls')),
+    path('captcha/', include('captcha.urls')),
 
 ]
 

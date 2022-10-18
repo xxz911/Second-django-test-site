@@ -1,7 +1,7 @@
 from django.http import HttpResponse, HttpResponseNotFound, Http404
 from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse_lazy
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, DetailView, CreateView, FormView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout, login
@@ -36,9 +36,25 @@ class WomenHome(DataMixin , ListView):
 
 #     return render(request, 'women/index.html', context=context)
 
-# @login_required
+
 def about(request):
     return render(request, 'women/about.html', {'menu': menu, 'title': 'О сайте'})
+
+
+class ContactFormView(DataMixin, FormView):
+    form_class = ContactForm
+    template_name = 'women/contact.html'
+    success_url = reverse_lazy('home')
+
+    def get_context_data(self, *, object_list=None, **kwargs): 
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title='Обратная связь')
+        return dict(list(context.items()) + list(c_def.items()))
+
+    def form_valid(self, form):
+        print(form.cleaned_data)
+        return redirect('home')
+
 
 class AddPage(LoginRequiredMixin, DataMixin, CreateView):
     form_class = AddPostForm

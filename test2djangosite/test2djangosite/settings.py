@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'debug_toolbar',
+    'captcha', 
     'women.apps.WomenConfig',
 ]
 
@@ -135,9 +136,15 @@ INTERNAL_IPS = [
     '127.0.0.1',
 ]
 
+
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
         'LOCATION': os.path.join(BASE_DIR, 'test2djangosite_cache'),
     }
 }
+
+CAPTCHA_FONT_SIZE = (40)
+CAPTCHA_IMAGE_SIZE = (150, 50)
+CAPTCHA_FOREGROUND_COLOR = 'red'
+CAPTCHA_BACKGROUND_COLOR = 'black'
